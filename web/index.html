@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Case — CaixaBank 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root {
+  --bg:       #0a0e1a;
+  --bg2:      #111827;
+  --bg3:      #1f2937;
+  --blue:     #3b82f6;
+  --purple:   #8b5cf6;
+  --cyan:     #06b6d4;
+  --green:    #10b981;
+  --red:      #ef4444;
+  --orange:   #f59e0b;
+  --gold:     #fbbf24;
+  --text:     #e2e8f0;
+  --dim:      #94a3b8;
+  --border:   #1e293b;
+  --card:     #161d2e;
+  --input-bg: #1e293b;
+  --radius:   12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+a { color: var(--blue); }
+
+/* ── HEADER ── */
+.app-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 32px 0;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-top { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.logo { width: 44px; height: 44px; background: linear-gradient(135deg, var(--blue), var(--purple)); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.header-title { font-size: 22px; font-weight: 800; background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.header-sub { font-size: 13px; color: var(--dim); margin-top: 2px; }
+.tabs { display: flex; gap: 4px; }
+.tab-btn { padding: 10px 22px; border: none; background: transparent; color: var(--dim); font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: rgba(59,130,246,.08); }
+
+/* ── LAYOUT ── */
+.container { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── CARDS ── */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.card-sub { font-size: 13px; color: var(--dim); margin-bottom: 16px; }
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+@media(max-width:900px){ .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } }
+
+/* ── BADGES / PILLS ── */
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.badge-blue   { background: rgba(59,130,246,.15); color: var(--blue); }
+.badge-green  { background: rgba(16,185,129,.15); color: var(--green); }
+.badge-red    { background: rgba(239,68,68,.15);  color: var(--red); }
+.badge-orange { background: rgba(245,158,11,.15); color: var(--orange); }
+.badge-purple { background: rgba(139,92,246,.15); color: var(--purple); }
+.badge-cyan   { background: rgba(6,182,212,.15);  color: var(--cyan); }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 8px; border: none;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
+.btn-success { background: var(--green); color: #fff; }
+.btn-success:hover { background: #059669; }
+.btn-outline { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
+.btn-outline:hover { background: rgba(59,130,246,.1); }
+.btn-danger  { background: var(--red); color: #fff; }
+.btn-cyan    { background: var(--cyan); color: #000; font-weight: 700; }
+.btn-cyan:hover { background: #0891b2; color: #fff; }
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ── FORM ELEMENTS ── */
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; color: var(--dim); margin-bottom: 6px; }
+.form-input, .form-textarea, .form-select {
+  width: 100%; padding: 10px 14px; background: var(--input-bg); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px;
+  transition: border-color .2s; }
+.form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--blue); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-select option { background: var(--bg2); }
+.input-highlight { border-color: var(--gold) !important; background: rgba(251,191,36,.07) !important; }
+
+/* ── TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th { background: var(--bg3); color: var(--dim); padding: 10px 12px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.data-table tr:hover td { background: rgba(255,255,255,.02); }
+.data-table .val-pos { color: var(--green); font-weight: 700; }
+.data-table .val-neg { color: var(--red);   font-weight: 700; }
+
+/* ── METRIC CARD ── */
+.metric-card { background: var(--bg3); border-radius: 10px; padding: 16px; text-align: center; }
+.metric-label { font-size: 11px; color: var(--dim); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.metric-value { font-size: 26px; font-weight: 800; margin: 6px 0 2px; }
+.metric-desc  { font-size: 11px; color: var(--dim); }
+
+/* ── COLLAPSIBLE ── */
+.collapse-btn { width: 100%; text-align: left; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 18px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;
+  transition: background .2s; }
+.collapse-btn:hover { background: var(--border); }
+.collapse-btn .arrow { transition: transform .2s; font-size: 12px; }
+.collapse-btn.open .arrow { transform: rotate(180deg); }
+.collapse-body { background: var(--card); border: 1px solid var(--border); border-radius: 0 0 8px 8px;
+  padding: 18px; margin-bottom: 8px; display: none; }
+.collapse-body.open { display: block; }
+
+/* ── PROGRESS/STEPS ── */
+.step-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; }
+
+/* ── SEMAPHORE ── */
+.semaphore { display: flex; gap: 8px; align-items: center; justify-content: center; padding: 12px;
+  border-radius: 8px; font-weight: 700; font-size: 15px; }
+.sem-green  { background: rgba(16,185,129,.15); color: var(--green); border: 1px solid rgba(16,185,129,.3); }
+.sem-red    { background: rgba(239,68,68,.15);  color: var(--red);   border: 1px solid rgba(239,68,68,.3); }
+.sem-orange { background: rgba(245,158,11,.15); color: var(--orange); border: 1px solid rgba(245,158,11,.3); }
+
+/* ── AGENT CANVAS ── */
+#agent-canvas { width: 100%; height: 440px; border-radius: 12px; background: var(--bg2); border: 1px solid var(--border); }
+.agent-panel { background: var(--bg3); border-radius: 10px; padding: 20px; position: sticky; top: 80px; max-height: 80vh; display: flex; flex-direction: column; }
+.agent-panel h3 { font-size: 14px; color: var(--cyan); font-weight: 700; margin-bottom: 12px; flex-shrink: 0; }
+.agent-output { font-size: 13px; line-height: 1.7; color: var(--text); overflow-y: auto; flex: 1; }
+.agent-output h1, .agent-output h2, .agent-output h3 { color: var(--cyan); font-size: 14px; margin: 12px 0 6px; }
+.agent-output strong { color: var(--gold); }
+.agent-output table { border-collapse: collapse; width: 100%; margin: 8px 0; }
+.agent-output td, .agent-output th { border: 1px solid var(--border); padding: 6px 10px; font-size: 12px; }
+.agent-output th { background: var(--bg2); }
+
+/* ── NODE STYLES ── */
+.node-idle    { filter: none; }
+.node-active  { filter: drop-shadow(0 0 10px #06b6d4); }
+.node-done    { filter: drop-shadow(0 0 6px #10b981); }
+.node-error   { filter: drop-shadow(0 0 6px #ef4444); }
+
+/* ── VOTE TABLE ── */
+.vote-bar { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width .5s; }
+.vote-card { display:flex; align-items:center; gap:14px; padding:14px 16px; background:var(--bg3); border-radius:10px; margin-bottom:8px; cursor:pointer; border:2px solid transparent; transition: border-color .2s, background .2s; }
+.vote-card:hover:not(.disabled) { border-color: var(--border); }
+.vote-card.selected { border-color: var(--blue); background: rgba(59,130,246,.1); }
+.vote-card.own-group { opacity:.45; cursor:default; }
+.vote-card.disabled { cursor:default; }
+.vote-radio { width:18px; height:18px; border-radius:50%; border:2px solid var(--dim); flex-shrink:0; transition: border-color .2s, background .2s, box-shadow .2s; }
+.vote-card.selected .vote-radio { border-color:var(--blue); background:var(--blue); box-shadow:0 0 6px rgba(59,130,246,.5); }
+.vote-locked { display:flex; align-items:center; gap:10px; padding:14px 16px; background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.3); border-radius:10px; color:var(--green); font-size:13px; margin-bottom:16px; }
+
+/* ── MISC ── */
+.divider { height: 1px; background: var(--border); margin: 24px 0; }
+.page-title { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
+.page-sub { font-size: 14px; color: var(--dim); margin-bottom: 28px; }
+.formula-box { background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2); border-radius: 8px;
+  padding: 12px 16px; font-family: monospace; font-size: 14px; color: var(--cyan); margin: 8px 0; }
+.info-box { background: rgba(6,182,212,.07); border-left: 3px solid var(--cyan); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; margin: 8px 0; }
+.warn-box  { background: rgba(245,158,11,.07); border-left: 3px solid var(--orange); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; margin: 8px 0; }
+
+/* ── LOADING ── */
+.spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--cyan); border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.pulse { animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+/* SVG spinner uses opacity pulse (transform-origin is unreliable for SVG without transform-box) */
+@keyframes svgPulse { 0%,100%{opacity:1;r:6} 50%{opacity:.3;r:4} }
+
+/* ── AGENT PROGRESS ── */
+.agent-step { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px;
+  font-size: 13px; font-weight: 500; transition: all .3s; }
+.agent-step.idle    { background: var(--bg3); color: var(--dim); }
+.agent-step.running { background: rgba(6,182,212,.12); color: var(--cyan); border: 1px solid rgba(6,182,212,.3); }
+.agent-step.done    { background: rgba(16,185,129,.1); color: var(--green); }
+.agent-step.error   { background: rgba(239,68,68,.1); color: var(--red); }
+.agent-icon { font-size: 18px; width: 28px; text-align: center; }
+
+/* ── sensitivity table ── */
+.sens-table { border-collapse: collapse; font-size: 12px; width: 100%; }
+.sens-table th, .sens-table td { border: 1px solid var(--border); padding: 6px 10px; text-align: center; }
+.sens-table th { background: var(--bg3); color: var(--dim); }
+.sens-pos { background: rgba(16,185,129,.18); color: var(--green); font-weight: 700; }
+.sens-neg { background: rgba(239,68,68,.18);  color: var(--red);   font-weight: 700; }
+.sens-base { border: 2px solid var(--gold) !important; }
+
+/* ── QR FLOTANTE ── */
+#qr-fab { position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  width: 52px; height: 52px; border-radius: 50%; border: none;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  color: #fff; font-size: 22px; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(59,130,246,.5);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s, box-shadow .2s; }
+#qr-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(59,130,246,.7); }
+
+#qr-modal { display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.75); align-items: center; justify-content: center; }
+#qr-modal.open { display: flex; }
+#qr-modal-box { background: #fff; border-radius: 16px; padding: 28px 28px 20px;
+  text-align: center; max-width: 280px; width: 90%; position: relative; }
+#qr-modal-box h3 { color: #1a1a2e; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+#qr-modal-box p { color: #64748b; font-size: 11px; margin-bottom: 16px; }
+#qr-code-img { display: flex; justify-content: center; }
+#qr-close { margin-top: 16px; background: #0f3460; color: #fff; border: none;
+  border-radius: 8px; padding: 8px 24px; font-size: 13px; font-weight: 600;
+  cursor: pointer; width: 100%; }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  /* Header */
+  .app-header { padding: 14px 14px 0; }
+  .header-top { gap: 10px; margin-bottom: 10px; }
+  .logo { width: 36px; height: 36px; font-size: 18px; border-radius: 8px; }
+  .header-title { font-size: 16px; }
+  .header-sub { font-size: 11px; display: none; }
+
+  /* Tabs: scroll horizontal */
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn { padding: 8px 14px; font-size: 12px; }
+
+  /* Layout */
+  .container { padding: 16px 12px; }
+  .page-title { font-size: 20px; }
+  .page-sub { font-size: 13px; margin-bottom: 18px; }
+  .card { padding: 14px; }
+
+  /* Grids → single column en mobile */
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+
+  /* Tables: scroll horizontal en contenedor */
+  .card > .data-table, .card table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Metrics */
+  .metric-value { font-size: 22px; }
+
+  /* Botones */
+  .btn { font-size: 13px; padding: 9px 16px; }
+
+  /* Fórmulas */
+  .formula-box { font-size: 11px; word-break: break-all; }
+
+  /* Agent canvas: altura reducida en mobile */
+  #agent-canvas { height: 300px; }
+
+  /* Agent panel: no sticky en mobile */
+  .agent-panel { position: static; max-height: 55vh; }
+
+  /* Info/warn boxes */
+  .info-box, .warn-box { font-size: 12px; }
+
+  /* QR FAB: un poco más arriba para no tapar contenido */
+  #qr-fab { bottom: 18px; right: 18px; width: 46px; height: 46px; font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+  .header-title { font-size: 14px; }
+  .tab-btn { padding: 7px 12px; font-size: 11px; }
+  .page-title { font-size: 18px; }
+  .metric-value { font-size: 20px; }
+  .container { padding: 12px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════ HEADER -->
+<header class="app-header">
+  <div class="header-top">
+    <div class="logo">💼</div>
+    <div>
+      <div class="header-title">Business Case — CaixaBank 2025</div>
+      <div class="header-sub">Programa Certificado en Project Management · Experto: Sergio Saravia</div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="showTab('summary',this)">📋 Resumen de Clase</button>
+    <button class="tab-btn" onclick="showTab('financial',this)">📊 Módulo Financiero</button>
+    <button class="tab-btn" onclick="showTab('groups',this)">👥 Casos Grupales</button>
+    <button class="tab-btn" onclick="showTab('agents',this)">🤖 Multi-Agente IA</button>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════════════════════ TAB 1: RESUMEN -->
+<div id="tab-summary" class="tab-panel active">
+<div class="container">
+  <h1 class="page-title">Resumen de Clase</h1>
+  <p class="page-sub">Todos los conceptos clave del Business Case en una sola vista.</p>
+
+  <!-- Definición -->
+  <div class="card">
+    <div class="grid-2">
+      <div>
+        <div class="card-title">¿Qué es el Business Case?</div>
+        <p style="font-size:14px;color:var(--dim);line-height:1.7;margin-top:10px;">
+          Documento que <strong style="color:var(--text)">justifica la inversión</strong> en un proyecto.
+          Su objetivo es convencer a la dirección o comité de inversión de que vale la pena ejecutarlo.
+        </p>
+        <div class="formula-box" style="margin-top:12px;">
+          Business Case = Problema + Alternativas + Financiero + Riesgos + Recomendación
+        </div>
+        <div style="margin-top:12px;font-size:13px;color:var(--dim);">
+          <strong style="color:var(--gold)">Valor en banca:</strong> claridad, enfoque en retorno y gestión de riesgos.
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;">Comparativa de documentos</div>
+        <table class="data-table">
+          <thead><tr><th>Documento</th><th>Para quién</th><th>Objetivo</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-blue">Pitch Deck</span></td><td>Inversores externos</td><td>Venta de visión</td></tr>
+            <tr><td><span class="badge badge-purple">Business Case</span></td><td>Dirección interna</td><td>Justificar inversión</td></tr>
+            <tr><td><span class="badge badge-cyan">Project Charter</span></td><td>Equipo de proyecto</td><td>Autorizar ejecución</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estructura BC -->
+  <div style="font-size:18px;font-weight:700;margin-bottom:16px;">Estructura del Business Case</div>
+  <div id="bc-sections">
+    <div>
+      <button class="collapse-btn open" onclick="toggleCollapse(this)">
+        <span>📄 1. Resumen Ejecutivo</span><span class="arrow">▼</span>
+      </button>
+      <div class="collapse-body open">
+        <div class="grid-2">
+          <div>
+            <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--dim);">
+              <li>Breve y directo (máx. 1 página)</li>
+              <li>Responde: <strong style="color:var(--text)">¿Qué se propone? ¿Cuánto cuesta? ¿Qué se gana?</strong></li>
+              <li>Es lo primero — y a veces lo único — que lee el comité</li>
+              <li>Debe poder leerse de forma independiente</li>
+            </ul>
+          </div>
+          <div class="warn-box">
+            <strong>💡 Ejemplo:</strong> Proyecto IA anti-fraude en banca — reducir pérdidas por fraude en un 40%, inversión de €2M, payback en 18 meses.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>🔍 2. Problema / Oportunidad</span><span class="arrow">▼</span>
+      </button>
+      <div class="collapse-body">
+        <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--dim);">
+          <li>Definir claramente la <strong style="color:var(--text)">situación actual</strong> con datos</li>
+          <li>Impacto si no se hace nada (costo de inacción)</li>
+          <li>Oportunidad de mejora o ahorro cuantificada</li>
+          <li>Ejemplo Banco SIV: caída del 23% en clientes Gen Z en 24 meses</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>⚖️ 3. Opciones Consideradas</span><span class="arrow">▼</span>
+      </button>
+      <div class="collapse-body">
+        <div class="info-box">Siempre incluir <strong>"No hacer nada"</strong> como opción baseline — establece el costo de oportunidad.</div>
+        <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--dim);margin-top:8px;">
+          <li>Listar todas las alternativas viables</li>
+          <li>Pros y contras de cada opción</li>
+          <li>Criterios de comparación: costo, tiempo, riesgo, retorno</li>
+          <li>Uso de polinomio de decisión con pesos (ver Módulo Financiero)</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>💰 4. Análisis Financiero</span><span class="arrow">▼</span>
+      </button>
+      <div class="collapse-body">
+        <div class="grid-4" style="margin-bottom:16px;">
+          <div class="metric-card">
+            <div class="metric-label">ROI</div>
+            <div class="metric-value" style="color:var(--blue);font-size:20px;">(B-I)/I</div>
+            <div class="metric-desc">Sin valor del dinero en el tiempo</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">VAN</div>
+            <div class="metric-value" style="color:var(--purple);font-size:20px;">Σ Ft/(1+r)ᵗ</div>
+            <div class="metric-desc">VAN &gt; 0 → Crea valor</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">TIR</div>
+            <div class="metric-value" style="color:var(--cyan);font-size:20px;">VAN = 0</div>
+            <div class="metric-desc">TIR &gt; WACC → Viable</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Payback</div>
+            <div class="metric-value" style="color:var(--green);font-size:20px;">∑Ft ≥ I</div>
+            <div class="metric-desc">Menos años → mejor</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <strong>Prioridad de criterios:</strong> VAN &gt; TIR/ROI &gt; Payback — pero siempre supeditado a la <strong>visión estratégica</strong> de la compañía.
+        </div>
+        <div style="font-size:13px;color:var(--dim);margin-top:12px;">Modelar 3 escenarios: <strong style="color:var(--green)">Optimista</strong>, <strong style="color:var(--blue)">Base</strong>, <strong style="color:var(--red)">Pesimista</strong> — con análisis de sensibilidad a variables críticas.</div>
+      </div>
+    </div>
+    <div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>⚠️ 5. Riesgos y Mitigantes</span><span class="arrow">▼</span>
+      </button>
+      <div class="collapse-body">
+        <table class="data-table">
+          <thead><tr><th>Tipo de Riesgo</th><th>Ejemplos en Banca</th><th>Gestión</th></tr></thead>
+          <tbody>
+            <tr><td>Operacional</td><td>Fallo de sistemas, fraude interno</td><td>Controles + seguros</td></tr>
+            <tr><td>Financiero</td><td>Ingresos menores a lo proyectado</td><td>Escenarios conservadores</td></tr>
+            <tr><td>Regulatorio</td><td>Cambio en normativa PSD2 / GDPR</td><td>Asesoría legal permanente</td></tr>
+            <tr><td>Tecnológico</td><td>Obsolescencia, ciberseguridad</td><td>Arquitectura escalable</td></tr>
+            <tr><td>Reputacional</td><td>Rechazo de clientes al cambio</td><td>Change management</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <button class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>✅ 6. Recomendación Final</span><span class="arrow">▼</span>
+      </button>
+      <div class="collapse-body">
+        <div class="grid-2">
+          <ul style="font-size:14px;line-height:2;padding-left:18px;color:var(--dim);">
+            <li>Resumir la <strong style="color:var(--text)">opción preferida</strong></li>
+            <li>Justificar con datos financieros y estratégicos</li>
+            <li>Ser claro y directo: <strong style="color:var(--green)">APROBAR</strong> / <strong style="color:var(--red)">NO APROBAR</strong></li>
+            <li>Enfocado en decisión, no en análisis excesivo</li>
+          </ul>
+          <div class="info-box">Una vez aprobado el BC → siguiente paso: <strong>Project Charter</strong>. Convierte la justificación en plan de acción ejecutable y autoriza formalmente al PM.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capital CET1 / restricciones bancarias -->
+  <div class="card" style="margin-top:24px;">
+    <div class="card-title">🏦 Consideraciones específicas en Banca</div>
+    <div class="card-sub">Factores adicionales al evaluar un BC en una entidad financiera</div>
+    <div class="grid-3">
+      <div class="info-box"><strong>Capital CET1:</strong> Los proyectos que consumen capital regulatorio deben justificarse contra el ROE ajustado por riesgo.</div>
+      <div class="info-box"><strong>Rentabilidad ajustada:</strong> En banca se usa RAROC (Risk-Adjusted Return on Capital), no solo ROI simple.</div>
+      <div class="info-box"><strong>Compliance:</strong> Cualquier iniciativa digital debe considerar PSD2, GDPR, DORA y normativa del Banco de España desde el inicio.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ TAB 2: FINANCIERO -->
+<div id="tab-financial" class="tab-panel">
+<div class="container">
+  <h1 class="page-title">Módulo Financiero Interactivo</h1>
+  <p class="page-sub">Calcula VAN, TIR, ROI y Payback en tiempo real. Modifica los parámetros y observa la sensibilidad.</p>
+
+  <div class="grid-2" style="margin-bottom:24px;">
+    <!-- Parámetros -->
+    <div class="card">
+      <div class="card-title">⚙️ Parámetros del Caso</div>
+      <div class="card-sub">Las celdas en dorado son editables — modifícalas para ver cómo cambian los resultados</div>
+
+      <div class="form-group">
+        <label class="form-label">Caso / Alternativa</label>
+        <select class="form-select" id="fin-alt" onchange="finAltChanged()">
+          <option value="0">Alt 1: App Fintech Gen Z</option>
+          <option value="1">Alt 2: Alianza Neobank</option>
+          <option value="2">Alt 3: Rediseño Experiencia Digital</option>
+          <option value="custom">Caso personalizado</option>
+        </select>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">💰 CapEx Inicial (€)</label>
+          <input type="number" class="form-input input-highlight" id="fin-capex" value="6000000" oninput="calcFinancial()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">📋 OpEx Año 1 (€)</label>
+          <input type="number" class="form-input input-highlight" id="fin-opex" value="2000000" oninput="calcFinancial()">
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:600;color:var(--dim);margin-bottom:8px;">Ingresos proyectados (€)</div>
+      <div class="grid-2" style="gap:8px;">
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Año 1</label>
+          <input type="number" class="form-input input-highlight" id="fin-r1" value="500000" oninput="calcFinancial()">
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Año 2</label>
+          <input type="number" class="form-input input-highlight" id="fin-r2" value="1800000" oninput="calcFinancial()">
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Año 3</label>
+          <input type="number" class="form-input input-highlight" id="fin-r3" value="4200000" oninput="calcFinancial()">
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Año 4</label>
+          <input type="number" class="form-input input-highlight" id="fin-r4" value="7500000" oninput="calcFinancial()">
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">Año 5</label>
+          <input type="number" class="form-input input-highlight" id="fin-r5" value="11000000" oninput="calcFinancial()">
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label">WACC (%)</label>
+          <input type="number" class="form-input input-highlight" id="fin-wacc" value="12" step="0.5" min="1" max="30" oninput="calcFinancial()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div>
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div class="metric-card">
+          <div class="metric-label">VAN</div>
+          <div class="metric-value" id="res-van" style="color:var(--green);">—</div>
+          <div class="metric-desc" id="res-van-status">calculando…</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">TIR</div>
+          <div class="metric-value" id="res-tir" style="color:var(--cyan);">—</div>
+          <div class="metric-desc" id="res-tir-status">calculando…</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">ROI</div>
+          <div class="metric-value" id="res-roi" style="color:var(--blue);">—</div>
+          <div class="metric-desc">Rentabilidad total (5 años)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Payback</div>
+          <div class="metric-value" id="res-payback" style="color:var(--orange);">—</div>
+          <div class="metric-desc">Período de recuperación</div>
+        </div>
+      </div>
+      <div id="res-semaphore" class="semaphore sem-orange">⏳ Calcula los parámetros para ver el veredicto</div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">📊 Flujos de caja descontados</div>
+        <canvas id="fin-chart" height="160" style="margin-top:12px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de sensibilidad -->
+  <div class="card">
+    <div class="card-title">🎯 Análisis de Sensibilidad — VAN según WACC × Crecimiento de Ingresos</div>
+    <div class="card-sub">Verde = VAN positivo (viable). Rojo = VAN negativo. El borde dorado marca el caso base actual.</div>
+    <div style="overflow-x:auto;">
+      <table class="sens-table" id="sens-table"></table>
+    </div>
+  </div>
+
+  <!-- Enlace al Google Sheet -->
+  <div class="card" style="background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.3);text-align:center;padding:32px;">
+    <div style="font-size:20px;margin-bottom:8px;">📊</div>
+    <div class="card-title" style="font-size:18px;">Google Sheets — Módulo Financiero Completo</div>
+    <div class="card-sub" style="margin-bottom:16px;">Versión con fórmulas nativas, gráficos y 7 hojas de análisis (VAN, TIR, ROI, Payback, Sensibilidad, Comparativa)</div>
+    <a href="https://docs.google.com/spreadsheets/d/1y6lTzsRYaJFi3j9UMhKkby4YaHNAusf-ERQYesDAIAU/edit" target="_blank" class="btn btn-primary">
+      🔗 Abrir en Google Sheets
+    </a>
+    <div style="margin-top:16px;font-size:12px;color:var(--dim);">
+      Para generar tu propio Sheet con las 3 alternativas del Banco SIV, corre el script <code>financial_module.gs</code> en <a href="https://script.google.com" target="_blank">script.google.com</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ TAB 3: GRUPOS -->
+<div id="tab-groups" class="tab-panel">
+<div class="container">
+  <h1 class="page-title">Casos Grupales — Banco SIV</h1>
+  <p class="page-sub">Cada grupo desarrolla su Business Case para resolver la fuga de clientes Gen Z del Banco SIV.</p>
+
+  <!-- Vista pública / admin toggle -->
+  <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
+    <button class="btn btn-primary" id="btn-my-group" onclick="showGroupView('form')">✏️ Mi Grupo</button>
+    <button class="btn btn-outline" id="btn-compare" onclick="showGroupView('compare')">📊 Comparativa</button>
+    <button class="btn btn-outline" id="btn-vote" onclick="showGroupView('vote')">🗳️ Votación</button>
+    <div style="flex:1"></div>
+    <button class="btn btn-sm btn-outline" onclick="refreshGroups()">🔄 Actualizar</button>
+    <button class="btn btn-sm" style="color:var(--red);border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.08);" onclick="resetAllGroups()">🗑️ Reset datos</button>
+  </div>
+
+  <!-- ── FORM VIEW ── -->
+  <div id="gview-form">
+    <!-- Registration -->
+    <div class="card" id="card-register">
+      <div class="card-title">📋 Registro de Grupo</div>
+      <div class="card-sub">Selecciona tu slot y registra el nombre de tu equipo</div>
+      <div class="grid-2" style="max-width:500px;">
+        <div class="form-group">
+          <label class="form-label">Slot de Grupo</label>
+          <select class="form-select" id="group-slot">
+            <option value="">-- Selecciona --</option>
+            <option value="g1">Grupo 1</option><option value="g2">Grupo 2</option>
+            <option value="g3">Grupo 3</option><option value="g4">Grupo 4</option>
+            <option value="g5">Grupo 5</option><option value="g6">Grupo 6</option>
+            <option value="g7">Grupo 7</option><option value="g8">Grupo 8</option>
+            <option value="g9">Grupo 9</option><option value="g10">Grupo 10</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nombre del Equipo</label>
+          <input type="text" class="form-input" id="group-name" placeholder="Ej: Team Alpha">
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="registerGroup()">Registrar Grupo →</button>
+    </div>
+
+    <!-- BC Form (hidden until registered) -->
+    <div id="bc-form" style="display:none;">
+      <div class="card">
+        <div class="card-title">🏦 Business Case — Banco SIV</div>
+        <div class="card-sub">El Banco SIV sufre una caída constante de ingresos por pérdida de clientes Gen Z (1990-2010) ante competencia agresiva de fintechs y neobancos.</div>
+
+        <div class="form-group">
+          <label class="form-label">📝 1. Resumen Ejecutivo</label>
+          <textarea class="form-textarea" id="bc-summary" placeholder="¿Qué se propone? ¿Cuánto cuesta? ¿Qué se gana?" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">🔍 2. Problema / Oportunidad Identificada</label>
+          <textarea class="form-textarea" id="bc-problem" placeholder="Describe el problema principal del Banco SIV con datos concretos..." rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">⚖️ 3. Alternativa Elegida</label>
+          <select class="form-select" id="bc-alternative" style="margin-bottom:8px;" onchange="setAltDefaults()">
+            <option value="">-- Selecciona una alternativa --</option>
+            <option value="app">App Fintech propia para Gen Z</option>
+            <option value="alliance">Alianza con Neobank existente</option>
+            <option value="redesign">Rediseño completo experiencia digital</option>
+            <option value="other">Otra alternativa (describir)</option>
+          </select>
+          <textarea class="form-textarea" id="bc-alt-reason" placeholder="Justifica por qué esta alternativa es la mejor..." rows="2"></textarea>
+        </div>
+
+        <!-- INVERSIÓN — campo destacado -->
+        <div class="card" style="background:rgba(251,191,36,.05);border-color:rgba(251,191,36,.3);margin-bottom:16px;">
+          <div class="card-title" style="color:var(--gold);">💰 4. Inversión Requerida</div>
+          <div class="card-sub">Desglosa la inversión — este campo es clave para el análisis financiero</div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">CapEx Inicial (€) <span style="color:var(--gold)">★</span></label>
+              <input type="number" class="form-input input-highlight" id="bc-capex" value="0" placeholder="Inversión inicial en capital" oninput="calcGroupFinancials()">
+              <div style="font-size:11px;color:var(--dim);margin-top:4px;">Hardware, licencias, desarrollo, infraestructura...</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">OpEx Año 1 (€) <span style="color:var(--gold)">★</span></label>
+              <input type="number" class="form-input input-highlight" id="bc-opex" value="0" placeholder="Costes operativos primer año" oninput="calcGroupFinancials()">
+              <div style="font-size:11px;color:var(--dim);margin-top:4px;">Personal, marketing, mantenimiento...</div>
+            </div>
+          </div>
+          <div class="metric-card" style="text-align:left;padding:10px 14px;">
+            <span class="metric-label">Inversión Total = CapEx + OpEx Año 1: </span>
+            <strong id="total-inv" style="color:var(--gold);font-size:16px;">€ 0</strong>
+          </div>
+        </div>
+
+        <!-- Proyección de ingresos -->
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">📈 Proyección de Ingresos (5 años)</div>
+          <div class="grid-2" style="gap:8px;">
+            <div class="form-group" style="margin-bottom:8px;">
+              <label class="form-label">Año 1 (€)</label>
+              <input type="number" class="form-input input-highlight" id="bc-r1" value="0" oninput="calcGroupFinancials()">
+            </div>
+            <div class="form-group" style="margin-bottom:8px;">
+              <label class="form-label">Año 2 (€)</label>
+              <input type="number" class="form-input input-highlight" id="bc-r2" value="0" oninput="calcGroupFinancials()">
+            </div>
+            <div class="form-group" style="margin-bottom:8px;">
+              <label class="form-label">Año 3 (€)</label>
+              <input type="number" class="form-input input-highlight" id="bc-r3" value="0" oninput="calcGroupFinancials()">
+            </div>
+            <div class="form-group" style="margin-bottom:8px;">
+              <label class="form-label">Año 4 (€)</label>
+              <input type="number" class="form-input input-highlight" id="bc-r4" value="0" oninput="calcGroupFinancials()">
+            </div>
+            <div class="form-group" style="margin-bottom:8px;">
+              <label class="form-label">Año 5 (€)</label>
+              <input type="number" class="form-input input-highlight" id="bc-r5" value="0" oninput="calcGroupFinancials()">
+            </div>
+            <div class="form-group" style="margin-bottom:8px;">
+              <label class="form-label">WACC (%)</label>
+              <input type="number" class="form-input input-highlight" id="bc-wacc" value="10" step="0.5" oninput="calcGroupFinancials()">
+            </div>
+          </div>
+          <div class="grid-4" style="margin-top:12px;">
+            <div class="metric-card"><div class="metric-label">VAN</div><div class="metric-value" id="g-van" style="font-size:18px;color:var(--green);">—</div></div>
+            <div class="metric-card"><div class="metric-label">TIR</div><div class="metric-value" id="g-tir" style="font-size:18px;color:var(--cyan);">—</div></div>
+            <div class="metric-card"><div class="metric-label">ROI</div><div class="metric-value" id="g-roi" style="font-size:18px;color:var(--blue);">—</div></div>
+            <div class="metric-card"><div class="metric-label">Payback</div><div class="metric-value" id="g-payback" style="font-size:18px;color:var(--orange);">—</div></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">⚠️ 5. Riesgos y Mitigantes</label>
+          <textarea class="form-textarea" id="bc-risks" placeholder="Identifica los 3 principales riesgos y cómo los mitigarás..." rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">✅ 6. Recomendación Final</label>
+          <div style="display:flex;gap:16px;margin-bottom:10px;">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="bc-rec" value="approve" style="accent-color:var(--green);"> <strong style="color:var(--green)">APROBAR</strong>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="bc-rec" value="reject" style="accent-color:var(--red);"> <strong style="color:var(--red)">NO APROBAR</strong>
+            </label>
+          </div>
+          <textarea class="form-textarea" id="bc-rec-reason" placeholder="Justifica tu recomendación final..." rows="2"></textarea>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-success" onclick="saveGroupBC()">💾 Guardar Business Case</button>
+          <div id="save-status" style="font-size:13px;color:var(--dim);display:flex;align-items:center;gap:8px;"></div>
+          <div style="flex:1"></div>
+          <button class="btn btn-sm btn-outline" style="color:var(--dim);border-color:var(--dim);font-size:11px;" onclick="clearSession()">↩ Cambiar grupo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMPARE VIEW ── -->
+  <div id="gview-compare" style="display:none;">
+    <div class="card">
+      <div class="card-title">📊 Tabla Comparativa de Grupos</div>
+      <div class="card-sub">Comparación de todos los Business Cases desarrollados en clase</div>
+      <div style="overflow-x:auto;"><table class="data-table" id="compare-table">
+        <thead><tr>
+          <th>Grupo</th><th>Alternativa</th><th>Inversión Total</th>
+          <th>VAN</th><th>TIR</th><th>Payback</th>
+          <th>Riesgo Principal</th><th>Recomendación</th>
+        </tr></thead>
+        <tbody id="compare-body"><tr><td colspan="8" style="text-align:center;color:var(--dim);padding:20px;">Cargando grupos…</td></tr></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- ── VOTE VIEW ── -->
+  <div id="gview-vote" style="display:none;">
+    <div class="card">
+      <div class="card-title">🗳️ Votación Final — ¿Cuál es el mejor Business Case?</div>
+      <div class="card-sub">Cada grupo vota por el Business Case de otro equipo que considere más sólido (no puedes votar por el tuyo)</div>
+      <div id="vote-list" style="margin:16px 0;"></div>
+      <div id="vote-results" style="margin-top:24px;"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ TAB 4: MULTI-AGENTE -->
+<div id="tab-agents" class="tab-panel">
+<div class="container">
+  <h1 class="page-title">Sistema Multi-Agente IA</h1>
+  <p class="page-sub">Introduce una idea de proyecto bancario → el Orquestador descompone la idea, 4 agentes especializados la analizan en paralelo y el Report sintetiza un Business Case completo.</p>
+
+  <!-- Idea input -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-title">💡 Idea de Proyecto</div>
+    <div class="card-sub">Describe brevemente la iniciativa que quieres analizar (ej: "Crear una app de inversión para clientes Gen Z del Banco SIV")</div>
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <textarea class="form-textarea" id="agent-idea"
+        placeholder="Ej: Desarrollar una super-app móvil para retener y captar clientes Gen Z en Banco SIV, incluyendo inversión, ahorro automatizado y servicios de lifestyle banking..."
+        rows="3" style="flex:1;"></textarea>
+      <button class="btn btn-cyan" id="btn-run-agents" onclick="runAgents()" style="flex-shrink:0;margin-top:0;">
+        ▶ Ejecutar Agentes
+      </button>
+    </div>
+  </div>
+
+  <!-- Pipeline + Panel -->
+  <div class="grid-2" style="align-items:start;">
+    <!-- SVG Canvas -->
+    <div>
+      <div class="card-title" style="margin-bottom:12px;">🔄 Pipeline de Agentes</div>
+      <svg id="agent-canvas" viewBox="0 0 480 440">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+          </marker>
+          <marker id="arrow-active" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#06b6d4"/>
+          </marker>
+          <filter id="glow-cyan">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-green">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Connection lines -->
+        <line id="edge-0-1" x1="240" y1="80"  x2="240" y2="108" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line id="edge-1-2" x1="140" y1="170" x2="80"  y2="198" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line id="edge-1-3" x1="340" y1="170" x2="400" y2="198" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line id="edge-2-4" x1="80"  y1="258" x2="140" y2="302" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line id="edge-3-4" x1="400" y1="258" x2="340" y2="302" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+        <line id="edge-4-5" x1="240" y1="362" x2="240" y2="390" stroke="#1e293b" stroke-width="2" marker-end="url(#arrow)"/>
+
+        <!-- Nodes -->
+        <!-- 0: Orchestrator -->
+        <g id="node-0" class="node-idle" onclick="showAgentOutput(0)" style="cursor:pointer;">
+          <rect x="170" y="30" width="140" height="50" rx="12" fill="#1f2937" stroke="#3b82f6" stroke-width="2"/>
+          <text x="240" y="52" text-anchor="middle" fill="#3b82f6" font-size="18">🎯</text>
+          <text x="240" y="70" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Orchestrator</text>
+          <circle id="node-0-spin" cx="298" cy="38" r="6" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="20 18" opacity="0"/>
+        </g>
+
+        <!-- 1: Research -->
+        <g id="node-1" class="node-idle" onclick="showAgentOutput(1)" style="cursor:pointer;">
+          <rect x="90" y="120" width="140" height="50" rx="12" fill="#1f2937" stroke="#8b5cf6" stroke-width="2"/>
+          <text x="160" y="142" text-anchor="middle" fill="#8b5cf6" font-size="18">🔍</text>
+          <text x="160" y="160" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Research Agent</text>
+          <circle id="node-1-spin" cx="218" cy="128" r="6" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="20 18" opacity="0"/>
+        </g>
+
+        <!-- 2: Finance -->
+        <g id="node-2" class="node-idle" onclick="showAgentOutput(2)" style="cursor:pointer;">
+          <rect x="20" y="210" width="140" height="50" rx="12" fill="#1f2937" stroke="#10b981" stroke-width="2"/>
+          <text x="90" y="232" text-anchor="middle" fill="#10b981" font-size="18">💰</text>
+          <text x="90" y="250" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Finance Agent</text>
+          <circle id="node-2-spin" cx="148" cy="218" r="6" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="20 18" opacity="0"/>
+        </g>
+
+        <!-- 3: Legal -->
+        <g id="node-3" class="node-idle" onclick="showAgentOutput(3)" style="cursor:pointer;">
+          <rect x="320" y="120" width="140" height="50" rx="12" fill="#1f2937" stroke="#f59e0b" stroke-width="2"/>
+          <text x="390" y="142" text-anchor="middle" fill="#f59e0b" font-size="18">⚖️</text>
+          <text x="390" y="160" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Legal Agent</text>
+          <circle id="node-3-spin" cx="448" cy="128" r="6" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="20 18" opacity="0"/>
+        </g>
+
+        <!-- 4: Risk -->
+        <g id="node-4" class="node-idle" onclick="showAgentOutput(4)" style="cursor:pointer;">
+          <rect x="320" y="210" width="140" height="50" rx="12" fill="#1f2937" stroke="#ef4444" stroke-width="2"/>
+          <text x="390" y="232" text-anchor="middle" fill="#ef4444" font-size="18">⚠️</text>
+          <text x="390" y="250" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Risk Agent</text>
+          <circle id="node-4-spin" cx="448" cy="218" r="6" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="20 18" opacity="0"/>
+        </g>
+
+        <!-- 5: Report -->
+        <g id="node-5" class="node-idle" onclick="showAgentOutput(5)" style="cursor:pointer;">
+          <rect x="170" y="310" width="140" height="50" rx="12" fill="#1f2937" stroke="#06b6d4" stroke-width="2.5"/>
+          <text x="240" y="332" text-anchor="middle" fill="#06b6d4" font-size="18">📄</text>
+          <text x="240" y="350" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Report Agent</text>
+          <circle id="node-5-spin" cx="298" cy="318" r="6" fill="none" stroke="#06b6d4" stroke-width="2" stroke-dasharray="20 18" opacity="0"/>
+        </g>
+
+        <!-- Status text -->
+        <text id="canvas-status" x="240" y="428" text-anchor="middle" fill="#94a3b8" font-size="11">Haz click en un nodo para ver su descripción. Pulsa "Ejecutar Agentes" para iniciar.</text>
+      </svg>
+
+      <!-- Agent steps tracker -->
+      <div style="margin-top:16px;">
+        <div id="step-0" class="agent-step idle"><span class="agent-icon">🎯</span> Orchestrator — descompone la idea</div>
+        <div id="step-1" class="agent-step idle"><span class="agent-icon">🔍</span> Research — analiza mercado y competencia</div>
+        <div id="step-2" class="agent-step idle"><span class="agent-icon">💰</span> Finance — proyecta VAN, TIR, ROI, Payback</div>
+        <div id="step-3" class="agent-step idle"><span class="agent-icon">⚖️</span> Legal — revisa regulación y compliance</div>
+        <div id="step-4" class="agent-step idle"><span class="agent-icon">⚠️</span> Risk — identifica riesgos y mitigantes</div>
+        <div id="step-5" class="agent-step idle"><span class="agent-icon">📄</span> Report — genera el Business Case final</div>
+      </div>
+    </div>
+
+    <!-- Output panel -->
+    <div class="agent-panel">
+      <h3 id="agent-panel-title">📋 Output del Agente</h3>
+      <div id="agent-panel-content" class="agent-output" style="color:var(--dim);">
+        Pulsa "Ejecutar Agentes" para iniciar el pipeline. Los agentes se activarán de forma secuencial y aquí verás el output de cada uno al completarse.<br><br>
+        También puedes hacer click en cualquier nodo del diagrama para ver su descripción y prompt.
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt descriptions (hidden, shown on node click) -->
+  <div id="node-prompts" style="display:none;">
+    <div id="prompt-0">🎯 <strong>Orchestrator</strong><br><br>Descompone la idea inicial en hipótesis clave para los agentes especializados. Define el título del proyecto, la hipótesis de mercado, la hipótesis financiera, la hipótesis legal y la hipótesis de riesgo. Es el punto de entrada del pipeline multi-agente.</div>
+    <div id="prompt-1">🔍 <strong>Research Agent</strong><br><br>Analiza el mercado objetivo, la competencia (especialmente fintechs y neobancos), y las tendencias relevantes (Gen Z, digitalización, open banking). Identifica la oportunidad y justifica por qué ahora es el momento correcto para actuar.</div>
+    <div id="prompt-2">💰 <strong>Finance Agent</strong><br><br>Proyecta los indicadores financieros: VAN, TIR, ROI y Payback. Estima la inversión necesaria (CapEx + OpEx), proyecta ingresos a 5 años, sugiere el WACC apropiado para banca española, y modela escenarios optimista/base/pesimista.</div>
+    <div id="prompt-3">⚖️ <strong>Legal Agent</strong><br><br>Identifica el marco regulatorio aplicable: PSD2, GDPR, DORA, Basilea III, normativa del Banco de España. Detalla las licencias necesarias, los requisitos de compliance, y los riesgos legales principales con sus mitigantes.</div>
+    <div id="prompt-4">⚠️ <strong>Risk Agent</strong><br><br>Identifica los 5 riesgos principales clasificados por tipo, probabilidad e impacto. Propone planes de mitigación concretos para cada uno. Evalúa también el escenario tail risk (qué pasa si el proyecto fracasa completamente).</div>
+    <div id="prompt-5">📄 <strong>Report Agent</strong><br><br>Sintetiza los outputs de todos los agentes anteriores en un Business Case ejecutivo estructurado. Genera el documento final con resumen ejecutivo, análisis del problema, alternativa recomendada, análisis financiero, riesgos y recomendación de aprobación/rechazo.</div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SCRIPTS -->
+<script>
+// ── TAB NAVIGATION ──────────────────────────────────────────────────────────
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (name === 'financial') setTimeout(calcFinancial, 50);
+  if (name === 'groups') refreshGroups();
+}
+
+// ── COLLAPSE ────────────────────────────────────────────────────────────────
+function toggleCollapse(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// ── FINANCIAL MODULE ─────────────────────────────────────────────────────────
+const FIN_ALTS = [
+  { capex:6000000, opex:2000000, revs:[500000,1800000,4200000,7500000,11000000], wacc:12 },
+  { capex:2000000, opex:1000000, revs:[1200000,2800000,4500000,6000000,7500000], wacc:10 },
+  { capex:3500000, opex:1500000, revs:[800000,2200000,4000000,6200000,8500000],  wacc:11 },
+];
+
+function finAltChanged() {
+  const v = document.getElementById('fin-alt').value;
+  if (v === 'custom') return;
+  const a = FIN_ALTS[+v];
+  document.getElementById('fin-capex').value = a.capex;
+  document.getElementById('fin-opex').value  = a.opex;
+  document.getElementById('fin-r1').value = a.revs[0];
+  document.getElementById('fin-r2').value = a.revs[1];
+  document.getElementById('fin-r3').value = a.revs[2];
+  document.getElementById('fin-r4').value = a.revs[3];
+  document.getElementById('fin-r5').value = a.revs[4];
+  document.getElementById('fin-wacc').value = a.wacc;
+  calcFinancial();
+}
+
+function getFinParams() {
+  const capex = +document.getElementById('fin-capex').value || 0;
+  const opex  = +document.getElementById('fin-opex').value  || 0;
+  const revs  = [1,2,3,4,5].map(i => +document.getElementById('fin-r'+i).value || 0);
+  const wacc  = (+document.getElementById('fin-wacc').value || 10) / 100;
+  return { inv: capex + opex, revs, wacc };
+}
+
+function calcVAN(revs, inv, wacc) {
+  let v = -inv;
+  revs.forEach((r,t) => v += r / Math.pow(1+wacc, t+1));
+  return v;
+}
+
+function calcTIR(revs, inv) {
+  let r = 0.15;
+  for (let i=0; i<200; i++) {
+    let npv=-inv, d=0;
+    revs.forEach((cf,t) => { const disc=Math.pow(1+r,t+1); npv+=cf/disc; d-=(t+1)*cf/(disc*(1+r)); });
+    if (Math.abs(npv)<0.01) break;
+    r -= npv/d;
+    if (r<-0.99) r=-0.99; if(r>10) r=10;
+  }
+  return r;
+}
+
+function calcPayback(revs, inv) {
+  let cum = -inv;
+  for (let t=0;t<revs.length;t++) { cum+=revs[t]; if(cum>=0) return t+1; }
+  return null;
+}
+
+function fmtCurrency(v) {
+  if (Math.abs(v)>=1e6) return (v/1e6).toFixed(2)+'M€';
+  if (Math.abs(v)>=1e3) return (v/1e3).toFixed(0)+'K€';
+  return v.toFixed(0)+'€';
+}
+
+function calcFinancial() {
+  const {inv, revs, wacc} = getFinParams();
+  if (!inv) return;
+
+  const van = calcVAN(revs, inv, wacc);
+  const tir = calcTIR(revs, inv);
+  const totalRev = revs.reduce((a,b)=>a+b,0);
+  const roi = (totalRev - inv) / inv;
+  const pb = calcPayback(revs, inv);
+
+  document.getElementById('res-van').textContent = fmtCurrency(van);
+  document.getElementById('res-van').style.color = van>0?'var(--green)':'var(--red)';
+  document.getElementById('res-van-status').textContent = van>0 ? '✅ Crea valor' : '❌ Destruye valor';
+
+  document.getElementById('res-tir').textContent = (tir*100).toFixed(1)+'%';
+  document.getElementById('res-tir').style.color = tir>wacc?'var(--green)':'var(--red)';
+  document.getElementById('res-tir-status').textContent = tir>wacc ? `✅ TIR > WACC (${(wacc*100).toFixed(0)}%)` : `❌ TIR < WACC (${(wacc*100).toFixed(0)}%)`;
+
+  document.getElementById('res-roi').textContent = (roi*100).toFixed(0)+'%';
+  document.getElementById('res-payback').textContent = pb ? pb+' años' : '>5 años';
+
+  const sem = document.getElementById('res-semaphore');
+  if (van>0 && tir>wacc) {
+    sem.className = 'semaphore sem-green'; sem.textContent = '✅ VIABLE — Se recomienda APROBAR el proyecto';
+  } else if (van>0 || tir>wacc) {
+    sem.className = 'semaphore sem-orange'; sem.textContent = '⚠️ MARGINAL — Revisar supuestos y escenarios';
+  } else {
+    sem.className = 'semaphore sem-red'; sem.textContent = '❌ NO VIABLE — Se recomienda NO APROBAR';
+  }
+
+  drawFinChart(revs, inv, wacc);
+  buildSensTable(revs, inv, wacc);
+}
+
+function drawFinChart(revs, inv, wacc) {
+  const canvas = document.getElementById('fin-chart');
+  if (!canvas.getContext) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 600;
+  canvas.width = W; canvas.height = 160;
+  ctx.clearRect(0,0,W,160);
+
+  const discounted = revs.map((r,t) => r/Math.pow(1+wacc,t+1));
+  const cumulative = [];
+  let cum = -inv;
+  discounted.forEach(d => { cum+=d; cumulative.push(cum); });
+
+  const all = [-inv, ...cumulative];
+  const mn = Math.min(...all), mx = Math.max(...all);
+  const range = mx-mn || 1;
+  const pad = 30, barW = (W-pad*2)/(revs.length+1)*0.6;
+  const toY = v => pad + (1-(v-mn)/range)*(160-pad*2);
+
+  // Zero line
+  const zy = toY(0);
+  ctx.strokeStyle = '#334155'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad,zy); ctx.lineTo(W-pad,zy); ctx.stroke();
+
+  // Bars
+  const xs = [pad, ...revs.map((_,i)=>pad+(i+1)*(W-pad*2)/(revs.length+1))];
+  const heights = [-inv, ...discounted];
+  heights.forEach((h,i) => {
+    const x = xs[i], y1=toY(0), y2=toY(h);
+    ctx.fillStyle = h>=0 ? 'rgba(16,185,129,.6)' : 'rgba(239,68,68,.6)';
+    ctx.fillRect(x-barW/2, Math.min(y1,y2), barW, Math.abs(y2-y1));
+  });
+
+  // Cumulative line
+  ctx.strokeStyle = '#06b6d4'; ctx.lineWidth=2;
+  ctx.beginPath();
+  cumulative.forEach((v,i) => {
+    const x = xs[i+1], y = toY(v);
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle = '#94a3b8'; ctx.font='10px Inter'; ctx.textAlign='center';
+  ['Inv.','Año 1','Año 2','Año 3','Año 4','Año 5'].forEach((l,i)=>ctx.fillText(l,xs[i],155));
+}
+
+function buildSensTable(revs, inv, wacc) {
+  const waccs  = [0.06,0.08,0.10,0.12,0.14,0.16,0.18];
+  const growths= [0.00,0.05,0.10,0.15,0.20,0.25,0.30];
+  const tbl = document.getElementById('sens-table');
+  let html = '<tr><th>WACC \\ Crec.</th>' + growths.map(g=>`<th>${(g*100).toFixed(0)}%</th>`).join('') + '</tr>';
+  waccs.forEach(w => {
+    html += `<tr><th>${(w*100).toFixed(0)}%</th>`;
+    growths.forEach(g => {
+      const scaledRevs = revs.map((r,t)=>r*Math.pow(1+g,t));
+      const v = calcVAN(scaledRevs, inv, w);
+      const isBase = Math.abs(w-wacc)<0.005 && Math.abs(g-0.0)<0.005;
+      const cls = (v>0?'sens-pos':'sens-neg') + (isBase?' sens-base':'');
+      html += `<td class="${cls}">${fmtCurrency(v)}</td>`;
+    });
+    html += '</tr>';
+  });
+  tbl.innerHTML = html;
+}
+
+// ── GROUPS MODULE ────────────────────────────────────────────────────────────
+let mySlot = null, myName = '';
+let allGroups = [];
+
+function showGroupView(view) {
+  ['form','compare','vote'].forEach(v => {
+    document.getElementById('gview-'+v).style.display = v===view?'block':'none';
+  });
+  document.getElementById('btn-my-group').className = 'btn btn-' + (view==='form'   ?'primary':'outline');
+  document.getElementById('btn-compare').className  = 'btn btn-' + (view==='compare'?'primary':'outline');
+  document.getElementById('btn-vote').className     = 'btn btn-' + (view==='vote'   ?'primary':'outline');
+  if (view==='compare') loadComparativeTable();
+  if (view==='vote')    loadVoteView();
+}
+
+async function refreshGroups() {
+  try {
+    const r = await fetch('/api/groups'); if(!r.ok) return;
+    const d = await r.json();
+    allGroups = d.groups || [];
+  } catch(e) { console.error(e); }
+}
+
+function registerGroup() {
+  const slot = document.getElementById('group-slot').value;
+  const name = document.getElementById('group-name').value.trim();
+  if (!slot || !name) { alert('Selecciona un slot y escribe el nombre del equipo'); return; }
+  mySlot = slot; myName = name;
+  localStorage.setItem('bc_slot', slot);
+  localStorage.setItem('bc_name', name);
+  document.getElementById('card-register').style.display='none';
+  document.getElementById('bc-form').style.display='block';
+  // Load any previously saved BC for this slot
+  loadSavedBC();
+}
+
+async function loadSavedBC() {
+  await refreshGroups();
+  const saved = allGroups.find(g => g.slot === mySlot);
+  if (saved && saved.teamName) populateForm(saved);
+}
+
+function populateForm(g) {
+  const f = g.financials || {};
+  document.getElementById('bc-summary').value   = g.summary   || '';
+  document.getElementById('bc-problem').value   = g.problem   || '';
+  document.getElementById('bc-alt-reason').value= '';
+  if (g.alternative) document.getElementById('bc-alternative').value = g.alternative;
+  document.getElementById('bc-capex').value  = f.capex   || 0;
+  document.getElementById('bc-opex').value   = f.opex_y1 || 0;
+  const revs = f.revenues || [0,0,0,0,0];
+  revs.forEach((r, i) => { const el = document.getElementById('bc-r'+(i+1)); if(el) el.value = r; });
+  document.getElementById('bc-wacc').value   = f.wacc    || 10;
+  document.getElementById('bc-risks').value  = g.risks   || '';
+  const rec = g.recommendation || '';
+  if (rec.startsWith('approve')) {
+    const rd = document.querySelector('input[name="bc-rec"][value="approve"]');
+    if (rd) rd.checked = true;
+    document.getElementById('bc-rec-reason').value = rec.replace(/^approve:\s*/,'');
+  } else if (rec.startsWith('reject')) {
+    const rd = document.querySelector('input[name="bc-rec"][value="reject"]');
+    if (rd) rd.checked = true;
+    document.getElementById('bc-rec-reason').value = rec.replace(/^reject:\s*/,'');
+  }
+  calcGroupFinancials();
+}
+
+function clearSession() {
+  if (!confirm('¿Seguro que quieres cambiar de grupo? Tu BC ya guardado seguirá en el servidor.')) return;
+  localStorage.removeItem('bc_slot');
+  localStorage.removeItem('bc_name');
+  mySlot = null; myName = '';
+  document.getElementById('card-register').style.display = 'block';
+  document.getElementById('bc-form').style.display = 'none';
+  document.getElementById('group-slot').value = '';
+  document.getElementById('group-name').value = '';
+  document.getElementById('save-status').innerHTML = '';
+}
+
+async function restoreSession() {
+  const slot = localStorage.getItem('bc_slot');
+  const name = localStorage.getItem('bc_name');
+  if (!slot || !name) return;
+  mySlot = slot; myName = name;
+  document.getElementById('group-slot').value = slot;
+  document.getElementById('group-name').value = name;
+  document.getElementById('card-register').style.display = 'none';
+  document.getElementById('bc-form').style.display = 'block';
+  await loadSavedBC();
+}
+
+function setAltDefaults() {
+  const v = document.getElementById('bc-alternative').value;
+  const defaults = {
+    app:      { capex:6000000, opex:2000000, revs:[500000,1800000,4200000,7500000,11000000] },
+    alliance: { capex:2000000, opex:1000000, revs:[1200000,2800000,4500000,6000000,7500000] },
+    redesign: { capex:3500000, opex:1500000, revs:[800000,2200000,4000000,6200000,8500000] },
+  };
+  if (!defaults[v]) return;
+  const d = defaults[v];
+  document.getElementById('bc-capex').value=d.capex;
+  document.getElementById('bc-opex').value=d.opex;
+  [1,2,3,4,5].forEach((i,idx)=>document.getElementById('bc-r'+i).value=d.revs[idx]);
+  calcGroupFinancials();
+}
+
+function calcGroupFinancials() {
+  const capex = +document.getElementById('bc-capex').value||0;
+  const opex  = +document.getElementById('bc-opex').value||0;
+  const inv   = capex+opex;
+  const revs  = [1,2,3,4,5].map(i=>+document.getElementById('bc-r'+i).value||0);
+  const wacc  = (+document.getElementById('bc-wacc').value||10)/100;
+
+  document.getElementById('total-inv').textContent = '€ '+inv.toLocaleString('es-ES');
+  if (!inv) return;
+
+  const van = calcVAN(revs,inv,wacc);
+  const tir = calcTIR(revs,inv);
+  const roi = (revs.reduce((a,b)=>a+b,0)-inv)/inv;
+  const pb  = calcPayback(revs,inv);
+
+  document.getElementById('g-van').textContent=fmtCurrency(van);
+  document.getElementById('g-van').style.color=van>0?'var(--green)':'var(--red)';
+  document.getElementById('g-tir').textContent=(tir*100).toFixed(1)+'%';
+  document.getElementById('g-tir').style.color=tir>wacc?'var(--green)':'var(--red)';
+  document.getElementById('g-roi').textContent=(roi*100).toFixed(0)+'%';
+  document.getElementById('g-payback').textContent=pb?pb+' años':'>5 años';
+}
+
+async function saveGroupBC() {
+  const btn = document.querySelector('#bc-form .btn-success');
+  const status = document.getElementById('save-status');
+  const rec = document.querySelector('input[name="bc-rec"]:checked');
+
+  const capex = +document.getElementById('bc-capex').value||0;
+  const opex  = +document.getElementById('bc-opex').value||0;
+  const inv   = capex+opex;
+  const revs  = [1,2,3,4,5].map(i=>+document.getElementById('bc-r'+i).value||0);
+  const wacc  = (+document.getElementById('bc-wacc').value||10)/100;
+
+  const van = calcVAN(revs,inv,wacc);
+  const tir = calcTIR(revs,inv);
+  const roi = (revs.reduce((a,b)=>a+b,0)-inv)/inv;
+  const pb  = calcPayback(revs,inv);
+
+  const payload = {
+    slot: mySlot,
+    teamName: myName,
+    summary: document.getElementById('bc-summary').value,
+    problem: document.getElementById('bc-problem').value,
+    alternative: document.getElementById('bc-alternative').value,
+    financials: { capex, opex_y1:opex, investment_total:inv, revenues:revs, wacc:wacc*100, van:Math.round(van), tir:Math.round(tir*1000)/1000, payback:pb||99 },
+    risks: document.getElementById('bc-risks').value,
+    recommendation: rec ? (rec.value+': '+document.getElementById('bc-rec-reason').value) : document.getElementById('bc-rec-reason').value,
+  };
+
+  btn.disabled=true; status.innerHTML='<div class="spinner"></div>&nbsp;Guardando...';
+  try {
+    const r = await fetch('/api/groups', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    if (r.ok) {
+      status.innerHTML='✅ Guardado · <button class="btn btn-sm btn-outline" style="padding:4px 10px;font-size:12px;" onclick="showGroupView(\'compare\')">Ver Comparativa →</button>';
+      // Pre-cargar la tabla comparativa en segundo plano
+      await refreshGroups();
+    } else {
+      const err = await r.json().catch(()=>({}));
+      status.innerHTML=`❌ Error al guardar: ${err.error||r.status}`;
+    }
+  } catch(e) { status.innerHTML='❌ Error de red: '+e.message; }
+  btn.disabled=false;
+}
+
+function loadComparativeTable() {
+  refreshGroups().then(() => {
+    const body = document.getElementById('compare-body');
+    const active = allGroups.filter(g=>g.teamName);
+    if (!active.length) { body.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--dim);padding:20px;">Ningún grupo ha guardado su BC todavía.</td></tr>'; return; }
+    body.innerHTML = active.map(g => {
+      const f = g.financials||{};
+      const altNames = {app:'App Fintech Gen Z',alliance:'Alianza Neobank',redesign:'Rediseño Digital',other:'Otra'};
+      const vanCls = (f.van||0)>0?'val-pos':'val-neg';
+      const tirCls = (f.tir||0)>(f.wacc||10)/100?'val-pos':'val-neg';
+      return `<tr>
+        <td><strong>${g.teamName}</strong><br><span style="color:var(--dim);font-size:11px">${g.slot}</span></td>
+        <td>${altNames[g.alternative]||g.alternative||'—'}</td>
+        <td><strong style="color:var(--gold)">€${((f.investment_total||0)/1e6).toFixed(2)}M</strong></td>
+        <td class="${vanCls}">${fmtCurrency(f.van||0)}</td>
+        <td class="${tirCls}">${((f.tir||0)*100).toFixed(1)}%</td>
+        <td>${f.payback===99?'>5 años':f.payback+' años'}</td>
+        <td style="font-size:12px;max-width:180px;">${(g.risks||'—').substring(0,80)}${(g.risks||'').length>80?'…':''}</td>
+        <td style="font-size:12px;">${(g.recommendation||'—').substring(0,60)}</td>
+      </tr>`;
+    }).join('');
+  });
+}
+
+let selectedVoteSlot = null;
+
+function loadVoteView() {
+  refreshGroups().then(() => {
+    const active = allGroups.filter(g => g.teamName);
+    const voteList = document.getElementById('vote-list');
+    if (!active.length) {
+      voteList.innerHTML = '<p style="color:var(--dim)">Ningún grupo ha guardado su BC todavía.</p>';
+      return;
+    }
+
+    const myGroup   = mySlot ? active.find(g => g.slot === mySlot) : null;
+    const voted     = myGroup?.vote || localStorage.getItem('bc_voted');
+
+    if (voted) {
+      const votedGroup = active.find(g => g.slot === voted);
+      voteList.innerHTML = `
+        <div class="vote-locked">✅ Tu voto ya ha sido registrado${votedGroup ? ' para <strong>' + votedGroup.teamName + '</strong>' : ''}. No puede modificarse.</div>
+        ${active.map(g => `
+          <div class="vote-card disabled${g.slot === voted ? ' selected' : ''}">
+            <div class="vote-radio"></div>
+            <div style="flex:1">
+              <strong>${g.teamName}</strong> <span class="badge badge-blue">${g.slot}</span>
+              <div style="font-size:12px;color:var(--dim);margin-top:2px;">${(g.summary||'').substring(0,80)}…</div>
+            </div>
+            ${g.slot === voted ? '<span style="color:var(--green);font-size:12px;">← tu voto</span>' : ''}
+          </div>`).join('')}`;
+    } else {
+      selectedVoteSlot = null;
+      voteList.innerHTML = `
+        ${!mySlot ? '<p style="color:var(--gold);font-size:13px;margin-bottom:12px;">⚠️ Registra tu grupo primero para poder votar.</p>' : ''}
+        ${active.map(g => `
+          <div class="vote-card${g.slot === mySlot ? ' own-group' : ''}" id="vote-card-${g.slot}"
+            onclick="${g.slot !== mySlot ? `selectVote('${g.slot}')` : ''}">
+            <div class="vote-radio" id="vote-radio-${g.slot}"></div>
+            <div style="flex:1">
+              <strong>${g.teamName}</strong> <span class="badge badge-blue">${g.slot}</span>
+              ${g.slot === mySlot ? '<span style="color:var(--dim);font-size:11px;"> (tu grupo)</span>' : ''}
+              <div style="font-size:12px;color:var(--dim);margin-top:2px;">${(g.summary||'').substring(0,80)}…</div>
+            </div>
+          </div>`).join('')}
+        <button class="btn btn-primary" id="btn-confirm-vote" onclick="confirmVote()" disabled
+          style="margin-top:16px;width:100%;">🗳️ Confirmar Voto</button>`;
+    }
+
+    renderVoteResults(active);
+  });
+}
+
+function selectVote(slot) {
+  if (!mySlot) { alert('Primero registra tu grupo en "Mi Grupo".'); return; }
+  selectedVoteSlot = slot;
+  document.querySelectorAll('.vote-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('vote-card-' + slot)?.classList.add('selected');
+  const btn = document.getElementById('btn-confirm-vote');
+  if (btn) { btn.disabled = false; btn.textContent = '🗳️ Confirmar voto por ' + (allGroups.find(g=>g.slot===slot)?.teamName || slot); }
+}
+
+async function confirmVote() {
+  if (!selectedVoteSlot || !mySlot) return;
+  const teamName = allGroups.find(g => g.slot === selectedVoteSlot)?.teamName || selectedVoteSlot;
+  if (!confirm(`¿Confirmas tu voto por "${teamName}"?\n\nEsta acción NO se puede deshacer.`)) return;
+  const btn = document.getElementById('btn-confirm-vote');
+  btn.disabled = true; btn.textContent = '⏳ Registrando...';
+  await fetch('/api/groups', { method:'PUT', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'vote', slot:mySlot, votedFor:selectedVoteSlot }) });
+  localStorage.setItem('bc_voted', selectedVoteSlot);
+  loadVoteView();
+}
+
+async function resetAllGroups() {
+  const pin = prompt('🔑 Introduce la clave de administrador para resetear todos los datos:');
+  if (pin === null) return;
+  if (pin !== 'lasalle26') { alert('❌ Clave incorrecta.'); return; }
+  if (!confirm('⚠️ Se borrarán TODOS los grupos y votos. ¿Continuar?')) return;
+  await fetch('/api/groups', { method:'PUT', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ action:'reset' }) });
+  localStorage.removeItem('bc_slot');
+  localStorage.removeItem('bc_name');
+  localStorage.removeItem('bc_voted');
+  mySlot = null; myName = null; selectedVoteSlot = null; allGroups = [];
+  await refreshGroups();
+  showGroupView('form');
+  alert('✅ Todos los datos han sido reseteados.');
+}
+
+function renderVoteResults(groups) {
+  const results = document.getElementById('vote-results');
+  const votes = {};
+  groups.forEach(g => { if (g.vote) votes[g.vote] = (votes[g.vote]||0)+1; });
+  const total = Object.values(votes).reduce((a,b)=>a+b,0)||1;
+
+  const sorted = groups.filter(g=>g.teamName).sort((a,b)=>(votes[b.slot]||0)-(votes[a.slot]||0));
+  results.innerHTML = '<div style="font-size:15px;font-weight:700;margin-bottom:12px;">📊 Resultados de Votación</div>' +
+    sorted.map((g,i) => {
+      const v = votes[g.slot]||0;
+      const pct = Math.round(v/total*100);
+      return `<div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
+          <span>${i===0?'🏆 ':''}${g.teamName}</span><span>${v} voto${v!==1?'s':''} (${pct}%)</span>
+        </div>
+        <div style="background:var(--bg3);border-radius:4px;height:8px;">
+          <div class="vote-bar" style="width:${pct}%"></div>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+// ── MULTI-AGENT ───────────────────────────────────────────────────────────────
+const AGENTS = ['orchestrator','research','finance','legal','risk','report'];
+const agentOutputs = {};
+let currentDisplayAgent = null;
+const activatedEdges = new Set();
+
+function showAgentOutput(idx) {
+  const names = ['Orchestrator','Research Agent','Finance Agent','Legal Agent','Risk Agent','Report Agent'];
+  const title = document.getElementById('agent-panel-title');
+  const content = document.getElementById('agent-panel-content');
+  title.textContent = ['🎯','🔍','💰','⚖️','⚠️','📄'][idx]+' '+names[idx];
+  currentDisplayAgent = idx;
+
+  if (agentOutputs[idx]) {
+    content.innerHTML = renderMarkdown(agentOutputs[idx]);
+  } else {
+    const promptDiv = document.getElementById('prompt-'+idx);
+    content.innerHTML = `<div style="margin-bottom:12px;padding:12px;background:var(--bg2);border-radius:8px;font-size:12px;color:var(--dim);">${promptDiv.innerHTML}</div><div style="color:var(--dim);font-size:13px;">Este agente aún no ha sido ejecutado.</div>`;
+  }
+}
+
+function renderMarkdown(text) {
+  return text
+    .replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:14px 0;">')
+    .replace(/^# (.+)$/gm,   '<h1 style="font-size:16px;color:var(--cyan);margin:16px 0 8px;font-weight:700;">$1</h1>')
+    .replace(/^## (.+)$/gm,  '<h2 style="font-size:14px;color:var(--cyan);margin:14px 0 6px;font-weight:700;">$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3 style="font-size:13px;color:var(--gold);margin:12px 0 4px;font-weight:600;">$3</h3>'
+      .replace('$3','$1'))
+    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--gold);">$1</strong>')
+    .replace(/^\| *(.+?) *\|(.*)$/gm, (_, first, rest) => {
+      const isHeader = /^[\s\|:-]+$/.test(rest.replace(/\|/g,''));
+      if (isHeader) return '';
+      const cells = (first + '|' + rest).split('|').filter((c,i,a) => i < a.length-1);
+      return '<tr>' + cells.map(c => `<td style="border:1px solid var(--border);padding:5px 10px;font-size:12px;">${c.trim()}</td>`).join('') + '</tr>';
+    })
+    .replace(/(<tr>.*<\/tr>\n?)+/gs, m => `<table style="border-collapse:collapse;width:100%;margin:8px 0;">${m}</table>`)
+    .replace(/^- (.+)$/gm, '<div style="margin:2px 0;">• $1</div>')
+    .replace(/\n{2,}/g, '<br>')
+    .replace(/\n/g, '<br>');
+}
+
+// outgoing edges per node index (sequential execution order)
+const NODE_EDGES = {0:'edge-0-1', 1:'edge-1-2', 2:'edge-2-4', 3:'edge-3-4', 4:'edge-4-5'};
+
+function setNodeState(idx, state) {
+  const node = document.getElementById('node-'+idx);
+  const spin = document.getElementById('node-'+idx+'-spin');
+  const step = document.getElementById('step-'+idx);
+
+  node.setAttribute('class', 'node-'+state);
+  step.className = 'agent-step ' + state;
+
+  if (state === 'running') {
+    spin.setAttribute('opacity', '1');
+    spin.style.animation = 'pulse 0.9s ease-in-out infinite';
+  } else {
+    spin.setAttribute('opacity', '0');
+    spin.style.animation = '';
+  }
+
+  if (state === 'done') {
+    // Light the outgoing edge(s) for this node — accumulate, never reset
+    if (idx === 1) { activatedEdges.add('edge-1-2'); activatedEdges.add('edge-1-3'); }
+    else if (NODE_EDGES[idx]) { activatedEdges.add(NODE_EDGES[idx]); }
+    activatedEdges.forEach(id => {
+      document.getElementById(id)?.setAttribute('stroke', '#10b981');
+    });
+  }
+}
+
+function updateCanvasStatus(msg) {
+  document.getElementById('canvas-status').textContent = msg;
+}
+
+async function callAgent(agentName, idea, context) {
+  const r = await fetch('/api/agent', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({agent: agentName, idea, context}),
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function runAgents() {
+  const idea = document.getElementById('agent-idea').value.trim();
+  if (!idea) { alert('Por favor describe una idea de proyecto antes de ejecutar los agentes.'); return; }
+
+  const btn = document.getElementById('btn-run-agents');
+  btn.disabled = true; btn.textContent = '⏳ Procesando...';
+
+  // Reset all nodes and edge tracking
+  activatedEdges.clear();
+  ['edge-0-1','edge-1-2','edge-1-3','edge-2-4','edge-3-4','edge-4-5'].forEach(id =>
+    document.getElementById(id)?.setAttribute('stroke','#1e293b'));
+  for (let i=0;i<6;i++) { setNodeState(i,'idle'); agentOutputs[i] = null; }
+
+  const context = {};
+  const panel   = document.getElementById('agent-panel-content');
+  const titleEl = document.getElementById('agent-panel-title');
+  const EMOJIS  = ['🎯','🔍','💰','⚖️','⚠️','📄'];
+  const NAMES   = ['Orchestrator','Research','Finance','Legal','Risk','Report'];
+  const spin    = txt => `<div style="display:flex;align-items:center;gap:12px;color:var(--cyan);"><div class="spinner"></div> ${txt}</div>`;
+
+  // ── ETAPA 1: Orquestador ──────────────────────────────────────────────────
+  setNodeState(0, 'running');
+  updateCanvasStatus('⚡ Orquestador analizando la idea...');
+  titleEl.textContent = '🎯 Orchestrator';
+  panel.innerHTML = spin('Orquestador descomponiendo la idea en hipótesis...');
+
+  try {
+    const orchResult = await callAgent('orchestrator', idea, {});
+    agentOutputs[0] = orchResult.output;
+    context.orchestrator = orchResult.output;
+    setNodeState(0, 'done');
+    panel.innerHTML = renderMarkdown(orchResult.output);
+    updateCanvasStatus('✅ Orquestador listo — iniciando 4 agentes en paralelo...');
+  } catch(e) {
+    setNodeState(0, 'error');
+    panel.innerHTML = `<div style="color:var(--red)">❌ Error en Orchestrator: ${e.message}</div>`;
+    btn.disabled = false; btn.textContent = '▶ Ejecutar de Nuevo';
+    return;
+  }
+
+  await new Promise(r => setTimeout(r, 300));
+
+  // ── ETAPA 2: Research · Finance · Legal · Risk (paralelo) ─────────────────
+  const middle = [['research',1],['finance',2],['legal',3],['risk',4]];
+  middle.forEach(([,idx]) => setNodeState(idx, 'running'));
+  updateCanvasStatus('⚡ 4 agentes corriendo en paralelo...');
+  titleEl.textContent = '⏳ Research · Finance · Legal · Risk';
+  panel.innerHTML = spin('4 agentes procesando simultáneamente — cada uno aparecerá al completarse...');
+
+  const middleResults = await Promise.allSettled(
+    middle.map(([name, idx]) =>
+      callAgent(name, idea, { orchestrator: context.orchestrator })
+        .then(r => {
+          context[name] = r.output;
+          agentOutputs[idx] = r.output;
+          setNodeState(idx, 'done');
+          titleEl.textContent = EMOJIS[idx] + ' ' + NAMES[idx] + ' — completado';
+          panel.innerHTML = renderMarkdown(r.output);
+          updateCanvasStatus('✅ ' + NAMES[idx] + ' completado');
+          return r;
+        })
+        .catch(e => { setNodeState(idx, 'error'); throw e; })
+    )
+  );
+
+  const failures = middleResults.filter(r => r.status === 'rejected');
+  if (failures.length) {
+    updateCanvasStatus('⚠️ ' + failures.length + ' agente(s) con error — generando Report con datos disponibles...');
+  }
+
+  await new Promise(r => setTimeout(r, 300));
+
+  // ── ETAPA 3: Report ────────────────────────────────────────────────────────
+  setNodeState(5, 'running');
+  updateCanvasStatus('⚡ Report sintetizando todos los outputs...');
+  titleEl.textContent = '📄 Report Agent';
+  panel.innerHTML = spin('Report sintetizando en Business Case ejecutivo...');
+
+  try {
+    const reportResult = await callAgent('report', idea, context);
+    agentOutputs[5] = reportResult.output;
+    context.report = reportResult.output;
+    setNodeState(5, 'done');
+    titleEl.textContent = '📄 Business Case — completado';
+    panel.innerHTML = renderMarkdown(reportResult.output);
+    updateCanvasStatus('✅ Pipeline completado — click en cualquier nodo para ver su output');
+  } catch(e) {
+    setNodeState(5, 'error');
+    panel.innerHTML = `<div style="color:var(--red)">❌ Error en Report: ${e.message}</div>`;
+    updateCanvasStatus('❌ Error en el agente Report');
+  }
+
+  btn.disabled = false; btn.textContent = '▶ Ejecutar de Nuevo';
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  calcFinancial();
+  restoreSession();
+
+  // QR code
+  new QRCode(document.getElementById('qr-code-img'), {
+    text: 'https://docs.google.com/spreadsheets/d/1kPpLMt1nEvF8dQKfIrrivV76qXgJGzv1QA8-Gxdb9xE/edit?gid=0#gid=0',
+    width: 200, height: 200,
+    colorDark: '#0f3460', colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.M,
+  });
+});
+
+function toggleQR() {
+  document.getElementById('qr-modal').classList.toggle('open');
+}
+</script>
+
+<!-- ── QR FLOTANTE ── -->
+<button id="qr-fab" onclick="toggleQR()" title="Abrir Google Sheets">📊</button>
+
+<div id="qr-modal" onclick="if(event.target===this)toggleQR()">
+  <div id="qr-modal-box">
+    <h3>📊 Módulo Financiero</h3>
+    <p>Escanea para abrir el Google Sheets interactivo</p>
+    <div id="qr-code-img"></div>
+    <button id="qr-close" onclick="toggleQR()">Cerrar</button>
+  </div>
+</div>
+</body>
+</html>

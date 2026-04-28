@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/groups.js": { "memory": 256, "maxDuration": 15 },
+    "api/agent.js":  { "memory": 256, "maxDuration": 30 }
+  },
+  "rewrites": [
+    { "source": "/api/groups", "destination": "/api/groups.js" },
+    { "source": "/api/agent",  "destination": "/api/agent.js" }
+  ]
+}
