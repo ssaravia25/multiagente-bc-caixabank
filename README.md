@@ -1,6 +1,6 @@
-# Sistema Multi-Agente IA — Business Case CaixaBank 2025
+# Sistema Multi-Agente IA — Business Case
 
-Pipeline de 6 agentes Claude para generar Business Cases bancarios. Desarrollado para el Programa Certificado en Project Management de CaixaBank 2025.
+Pipeline de 6 agentes Claude para generar Business Cases bancarios. Desarrollado para el Programa Certificado en Project Management.
 
 **Demo en producción:** https://vercel-deploy-jet-tau.vercel.app
 
