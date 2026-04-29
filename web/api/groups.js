@@ -1,15 +1,15 @@
 const BLOB_BASE = 'https://jsonblob.com/api/jsonBlob';
 const BLOB_MAP = {
-  g1:  '019dd3a0-7817-7d06-98f6-147e3fda1184',
-  g2:  '019dd3a0-7bdc-7e39-be34-819dbfaaf0b0',
-  g3:  '019dd3a0-7f71-7178-9770-50d637b65f37',
-  g4:  '019dd3a0-8302-780d-9efd-68fdf74b3e61',
-  g5:  '019dd3a0-8692-7c33-89f4-4d020f355f21',
-  g6:  '019dd3a0-8a0e-742f-a5ff-1d77bcbfe524',
-  g7:  '019dd3a0-8dcd-73dd-a52d-c7987eb6092b',
-  g8:  '019dd3a0-931a-7565-94df-f87f707221f8',
-  g9:  '019dd3a0-96a2-76f5-8042-efb6c99bb846',
-  g10: '019dd3a0-9a1e-79cd-b39b-9a07dd95ecb1',
+  g1:  '019dda6f-cabc-7675-9db0-b2e4ec5c5e16',
+  g2:  '019dda6f-d704-76fc-9d6e-7de99a60396d',
+  g3:  '019dda6f-e308-7ebc-a1ec-b42e3af8b51a',
+  g4:  '019dda6f-f974-7026-b072-da02b1590a36',
+  g5:  '019dda70-059e-748d-a168-241467f3de51',
+  g6:  '019dda70-11a7-7e97-8925-8fdef12e232e',
+  g7:  '019dda70-1def-755e-ab69-f502ab6a4521',
+  g8:  '019dda70-2b57-762a-a45e-7b2f70555f56',
+  g9:  '019dda70-3762-7642-b39a-32216bd10a93',
+  g10: '019dda70-43f6-75a0-b941-d5362b2d32ba',
 };
 
 const EMPTY_GROUP = (slot) => ({
@@ -28,23 +28,36 @@ const EMPTY_GROUP = (slot) => ({
 async function readBlob(slot) {
   const id = BLOB_MAP[slot];
   if (!id) return EMPTY_GROUP(slot);
-  try {
-    const r = await fetch(`${BLOB_BASE}/${id}`, { headers: { Accept: 'application/json' } });
-    if (!r.ok) return EMPTY_GROUP(slot);
-    return await r.json();
-  } catch { return EMPTY_GROUP(slot); }
+  // Retry hasta 3 veces (JSONBlob a veces es flaky)
+  for (let i = 0; i < 3; i++) {
+    try {
+      const r = await fetch(`${BLOB_BASE}/${id}`, { headers: { Accept: 'application/json' } });
+      if (r.ok) return await r.json();
+      if (r.status === 404) return EMPTY_GROUP(slot);
+    } catch { /* retry */ }
+    if (i < 2) await new Promise(r => setTimeout(r, 300 * (i + 1)));
+  }
+  return EMPTY_GROUP(slot);
 }
 
 async function writeBlob(slot, data) {
   const id = BLOB_MAP[slot];
   if (!id) throw new Error(`Unknown slot: ${slot}`);
-  const r = await fetch(`${BLOB_BASE}/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(data),
-  });
-  if (!r.ok) throw new Error(`JSONBlob write failed: ${r.status}`);
-  return r.json();
+  let lastErr;
+  // Retry hasta 3 veces con backoff exponencial
+  for (let i = 0; i < 3; i++) {
+    try {
+      const r = await fetch(`${BLOB_BASE}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (r.ok) return await r.json();
+      lastErr = new Error(`JSONBlob write failed: ${r.status}`);
+    } catch (e) { lastErr = e; }
+    if (i < 2) await new Promise(r => setTimeout(r, 400 * (i + 1)));
+  }
+  throw lastErr;
 }
 
 export default async function handler(req, res) {
