@@ -1,15 +1,15 @@
 const BLOB_BASE = 'https://jsonblob.com/api/jsonBlob';
 const BLOB_MAP = {
-  g1:  '019dda6f-cabc-7675-9db0-b2e4ec5c5e16',
-  g2:  '019dda6f-d704-76fc-9d6e-7de99a60396d',
-  g3:  '019dda6f-e308-7ebc-a1ec-b42e3af8b51a',
-  g4:  '019dda6f-f974-7026-b072-da02b1590a36',
-  g5:  '019dda70-059e-748d-a168-241467f3de51',
-  g6:  '019dda70-11a7-7e97-8925-8fdef12e232e',
-  g7:  '019dda70-1def-755e-ab69-f502ab6a4521',
-  g8:  '019dda70-2b57-762a-a45e-7b2f70555f56',
-  g9:  '019dda70-3762-7642-b39a-32216bd10a93',
-  g10: '019dda70-43f6-75a0-b941-d5362b2d32ba',
+  g1:  '019df6c2-5811-7749-9112-e852f22cb267',
+  g2:  '019df6c2-5bc1-7258-aa3b-75ec05a7caab',
+  g3:  '019df6c2-5f54-72f8-a9d0-40dad88028d7',
+  g4:  '019df6c2-6354-77ed-9423-f4d6bc23e26d',
+  g5:  '019df6c2-6755-7a94-88d9-36a52b16280a',
+  g6:  '019df6c2-6b65-7bb9-91f8-e8f174862a43',
+  g7:  '019df6c2-6ef1-7470-816e-90cf01e0e2aa',
+  g8:  '019df6c2-7292-7181-8626-fc8cc6fc484f',
+  g9:  '019df6c2-7692-7dbe-ab06-6327eff21675',
+  g10: '019df6c2-7a20-7693-b551-5e5bc5882fc4',
 };
 
 const EMPTY_GROUP = (slot) => ({
